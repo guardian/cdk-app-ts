@@ -84,16 +84,14 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
     this.removeTask('upgrade');
     this.removeTask('watch');
 
-    this.addFields({
-      scripts: {
-        build: 'tsc',
-        test: 'jest',
-        format: 'prettier --write "{lib,bin}/**/*.ts"',
-        lint: 'eslint lib/** bin/** --ext .ts --no-error-on-unmatched-pattern',
-        synth: 'cdk synth --path-metadata false --version-reporting false',
-        diff: 'cdk diff --path-metadata false --version-reporting false',
-      },
+    // Define our own tasks
+    this.addTask('test', { exec: 'jest', description: 'Run tests' });
+    this.addTask('format', { exec: 'prettier --write "{lib,bin}/**/*.ts"', description: 'Format sources using prettier' });
+    this.addTask('lint', { exec: 'eslint lib/** bin/** --ext .ts --no-error-on-unmatched-pattern', description: 'Lint sources using eslint' });
+    this.addTask('synth', { exec: 'cdk synth --path-metadata false --version-reporting false', description: 'synth CDK stack(s)' });
+    this.addTask('diff', { exec: 'cdk diff --path-metadata false --version-reporting false', description: 'diff CDK stack' });
 
+    this.addFields({
       prettier: '@guardian/prettier',
 
       jest: {

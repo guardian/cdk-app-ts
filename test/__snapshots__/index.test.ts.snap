@@ -186,6 +186,15 @@ tsconfig.tsbuildinfo
           },
         ],
       },
+      "diff": Object {
+        "description": "diff CDK stack",
+        "name": "diff",
+        "steps": Array [
+          Object {
+            "exec": "cdk diff --path-metadata false --version-reporting false",
+          },
+        ],
+      },
       "eject": Object {
         "description": "Remove projen from the project",
         "env": Object {
@@ -195,6 +204,42 @@ tsconfig.tsbuildinfo
         "steps": Array [
           Object {
             "spawn": "default",
+          },
+        ],
+      },
+      "format": Object {
+        "description": "Format sources using prettier",
+        "name": "format",
+        "steps": Array [
+          Object {
+            "exec": "prettier --write \\"{lib,bin}/**/*.ts\\"",
+          },
+        ],
+      },
+      "lint": Object {
+        "description": "Lint sources using eslint",
+        "name": "lint",
+        "steps": Array [
+          Object {
+            "exec": "eslint lib/** bin/** --ext .ts --no-error-on-unmatched-pattern",
+          },
+        ],
+      },
+      "synth": Object {
+        "description": "synth CDK stack(s)",
+        "name": "synth",
+        "steps": Array [
+          Object {
+            "exec": "cdk synth --path-metadata false --version-reporting false",
+          },
+        ],
+      },
+      "test": Object {
+        "description": "Run tests",
+        "name": "test",
+        "steps": Array [
+          Object {
+            "exec": "jest",
           },
         ],
       },
@@ -413,6 +458,10 @@ tsconfig.tsbuildinfo
     },
   },
   "jest.setup.js": "jest.mock(\\"@guardian/cdk/lib/constants/tracking-tag\\");",
+  "lib/__snapshots__/stack.test.ts.snap": "// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[\`The IntegrationTest stack matches the snapshot 1\`] = \`Object {}\`;
+",
   "lib/cdk.ts": "import { App } from 'aws-cdk-lib';
 import { MyStack } from './stack';
 
@@ -516,13 +565,14 @@ export class MyStack extends GuStack {
     "name": "test",
     "prettier": "@guardian/prettier",
     "scripts": Object {
-      "build": "tsc",
-      "diff": "cdk diff --path-metadata false --version-reporting false",
-      "format": "prettier --write \\"{lib,bin}/**/*.ts\\"",
-      "lint": "eslint lib/** bin/** --ext .ts --no-error-on-unmatched-pattern",
+      "default": "npx projen default",
+      "diff": "npx projen diff",
+      "eject": "npx projen eject",
+      "format": "npx projen format",
+      "lint": "npx projen lint",
       "projen": "npx projen",
-      "synth": "cdk synth --path-metadata false --version-reporting false",
-      "test": "jest",
+      "synth": "npx projen synth",
+      "test": "npx projen test",
     },
     "version": "0.0.0",
   },
