@@ -1,11 +1,24 @@
 const { typescript } = require('projen');
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
-  name: 'gucdk-app-ts',
+  name: 'cdk-app-ts',
+  packageName: '@guardian/cdk-app-ts',
+  description: 'projen starter for @guardian/cdk projects.',
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
+  github: false,
+
+  deps: [
+    'projen',
+    '@guardian/cdk@45.0.0',
+    'aws-cdk@2.25.0',
+    'aws-cdk-lib@2.25.0',
+    'constructs@10.1.17',
+    '@guardian/prettier@^1.0.0',
+  ],
+
   // packageName: undefined,  /* The "name" in package.json. */
 });
+
+project.eslint.addExtends();
+
 project.synth();
