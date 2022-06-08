@@ -19,6 +19,8 @@ const project = new typescript.TypeScriptProject({
   // packageName: undefined,  /* The "name" in package.json. */
 });
 
+project.addGitIgnore('tmp/'); // Used in integration test.
+
 project.eslint.addExtends();
 
 project.synth();

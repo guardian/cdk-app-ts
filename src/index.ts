@@ -140,38 +140,31 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
     });
 
     new SampleDir(this, 'lib', {
-      //files: { 'foo.ts': 'BLAHBLAH' },
-      sourceDir: path.join(__dirname, 'sample/lib'), // TODO
+      sourceDir: path.join(__dirname, 'sample/lib'),
     });
+  }
 
-    /**
+  postSynthesize(): void {
+    const msg = `Congratulations! You're ready to start developing with @guardian/cdk :).
 
-├── .gitignore
-├── README.md
-├── bin
-│   └── cdk.ts
-├── cdk.json
-├── jest.setup.js
-├── lib
-│   ├── __snapshots__
-│   │   └── integration-test.test.ts.snap
-│   ├── integration-test.test.ts
-│   └── integration-test.ts
-├── package-lock.json
-├── package.json
-└── tsconfig.json
-     */
+This starter-kit uses projen (https://github.com/projen/projen).
 
-    // Only things to add: devDeps, CDK version
+Unlike most starter-kits, projen is not a one-off generator, and synthesized
+files should NOT be manually edited. The only files you should edit are:
 
-    // Github Actions (if self-contained CDK repository)?
+- 'lib/' - your Typescript CDK files and tests
+- '.projenrc.js' - to update settings, e.g. to add extra dev dependencies (run
+  'npx projen' to re-synth after any changes)
 
-    // How do updates work? I.e. to client projects? Depends on pinning story -
-    // looks like semver, so will fetch latest compatible release on each synth.
+To synthesise your new Cloudformation stack, run:
 
-    // What else?
-    // Install @guardian/cdk and CDK itself
-    // Add @guardian/prettier and eslint
-    // Snapshot testing - but how to edit this file? - SampleDir class.
+    $ npx projen synth
+
+To list all possible tasks (such as 'test' and 'lint') and their descriptions run:
+
+    $ npx projen --help
+`;
+
+    console.log(msg);
   }
 }
