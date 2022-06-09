@@ -3,6 +3,7 @@ const { cdk } = require('projen');
 const project = new cdk.JsiiProject({
   defaultReleaseBranch: 'main',
   name: '@guardian/cdk-app-ts',
+  packageName: '@guardian/cdk-app-ts',
   description: 'projen starter for @guardian/cdk projects.',
   author: 'nicolas.long@theguardian.com',
   repositoryUrl: 'https://github.com/guardian/cdk-app-ts/',
@@ -27,8 +28,6 @@ const project = new cdk.JsiiProject({
     '@guardian/cdk@45.0.0',
     '@guardian/prettier@^1.0.0',
   ],
-
-  // packageName: undefined,  /* The "name" in package.json. */
 });
 
 project.addGitIgnore('tmp/'); // Used in integration test.
