@@ -47,6 +47,22 @@
       "type": "build"
     },
     {
+      "name": "jsii",
+      "type": "build"
+    },
+    {
+      "name": "jsii-diff",
+      "type": "build"
+    },
+    {
+      "name": "jsii-docgen",
+      "type": "build"
+    },
+    {
+      "name": "jsii-pacmak",
+      "type": "build"
+    },
+    {
       "name": "json-schema",
       "type": "build"
     },
@@ -76,20 +92,20 @@
     {
       "name": "@guardian/cdk",
       "version": "45.0.0",
-      "type": "runtime"
+      "type": "bundled"
     },
     {
       "name": "@guardian/prettier",
       "version": "^1.0.0",
-      "type": "runtime"
-    },
-    {
-      "name": "aws-cdk-lib",
-      "version": "2.25.0",
-      "type": "runtime"
+      "type": "bundled"
     },
     {
       "name": "aws-cdk",
+      "version": "2.25.0",
+      "type": "bundled"
+    },
+    {
+      "name": "aws-cdk-lib",
       "version": "2.25.0",
       "type": "runtime"
     },

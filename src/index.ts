@@ -1,4 +1,4 @@
-import path from 'path';
+import * as path from 'path';
 import { JsonFile, SampleDir, SampleFile } from 'projen';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from 'projen/lib/typescript';
 
@@ -7,19 +7,19 @@ export interface GuCDKTypescriptOptions {
   /**
    * Package name
    */
-  name: string;
+  readonly name: string;
 
   /**
    * Dev dependencies of this module.
    *
    * Use package@^version syntax.
    */
-  devDeps?: string[];
+  readonly devDeps?: string[];
 
   /**
    * Target for synth.
    */
-  outdir?: string;
+  readonly outdir?: string;
 }
 
 /**
