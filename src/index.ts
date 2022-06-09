@@ -30,6 +30,10 @@ export interface GuCDKTypescriptOptions {
 export class GuCDKTypescriptProject extends TypeScriptAppProject {
   constructor(options: GuCDKTypescriptOptions) {
 
+    const defaults: GuCDKTypescriptOptions = {
+      name: 'TODO',
+    };
+
     const tsOpts: TypeScriptProjectOptions = {
       defaultReleaseBranch: 'main',
       readme: {
@@ -64,6 +68,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
 
       srcdir: 'lib', // this defaults to src unfortunately for us
 
+      ...defaults,
       ...options,
     };
 
