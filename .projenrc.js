@@ -14,12 +14,16 @@ const project = new cdk.JsiiProject({
   github: false,
 
   deps: [
+    'projen',
     'aws-cdk-lib@2.25.0',
     'constructs@10.1.17',
   ],
 
-  bundledDeps: [
+  peerDeps: [
     'projen',
+  ],
+
+  bundledDeps: [
     'aws-cdk@2.25.0',
     '@guardian/cdk@45.0.0',
     '@guardian/prettier@^1.0.0',
