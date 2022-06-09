@@ -9,7 +9,6 @@ const project = new cdk.JsiiProject({
   repositoryUrl: 'https://github.com/guardian/cdk-app-ts/',
 
   npmDistTag: 'latest',
-  npmRegistryUrl: 'https://npm.pkg.github.com',
 
   github: false,
 
