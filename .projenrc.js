@@ -2,8 +2,7 @@ const { cdk } = require('projen');
 
 const project = new cdk.JsiiProject({
   defaultReleaseBranch: 'main',
-  name: 'cdk-app-ts',
-  packageName: '@guardian/cdk-app-ts',
+  name: '@guardian/cdk-app-ts',
   description: 'projen starter for @guardian/cdk projects.',
   author: 'nicolas.long@theguardian.com',
   repositoryUrl: 'https://github.com/guardian/cdk-app-ts/',
