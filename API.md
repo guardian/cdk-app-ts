@@ -18,7 +18,6 @@ const guCDKTypescriptOptions: GuCDKTypescriptOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#@guardian/cdk-app-ts.GuCDKTypescriptOptions.property.name">name</a></code> | <code>string</code> | Package name. |
-| <code><a href="#@guardian/cdk-app-ts.GuCDKTypescriptOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | Dev dependencies of this module. |
 | <code><a href="#@guardian/cdk-app-ts.GuCDKTypescriptOptions.property.outdir">outdir</a></code> | <code>string</code> | Target for synth. |
 
 ---
@@ -32,20 +31,6 @@ public readonly name: string;
 - *Type:* string
 
 Package name.
-
----
-
-##### `devDeps`<sup>Optional</sup> <a name="devDeps" id="@guardian/cdk-app-ts.GuCDKTypescriptOptions.property.devDeps"></a>
-
-```typescript
-public readonly devDeps: string[];
-```
-
-- *Type:* string[]
-
-Dev dependencies of this module.
-
-Use package@^version syntax.
 
 ---
 

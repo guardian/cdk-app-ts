@@ -7,8 +7,11 @@ const project = new cdk.JsiiProject({
   description: 'projen starter for @guardian/cdk projects.',
   author: 'nicolas.long@theguardian.com',
   repositoryUrl: 'https://github.com/guardian/cdk-app-ts/',
-
   npmDistTag: 'latest',
+
+  releaseToNpm: true,
+  publishTasks: true,
+  publishDryRun: true,
 
   github: false,
 
@@ -16,6 +19,10 @@ const project = new cdk.JsiiProject({
     'projen',
     'aws-cdk-lib@2.25.0',
     'constructs@10.1.17',
+  ],
+
+  devDeps: [
+    'publib',
   ],
 
   peerDeps: [
@@ -27,6 +34,12 @@ const project = new cdk.JsiiProject({
     '@guardian/cdk@45.0.0',
     '@guardian/prettier@^1.0.0',
   ],
+});
+
+// TODO really we should publish via a Github Action.
+project.addTask('publish', {
+  exec: 'publib',
+  description: 'publish to npm (requires an NPM_TOKEN env var to be available)',
 });
 
 project.addGitIgnore('tmp/'); // Used in integration test.

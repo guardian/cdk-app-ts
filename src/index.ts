@@ -10,13 +10,6 @@ export interface GuCDKTypescriptOptions {
   readonly name: string;
 
   /**
-   * Dev dependencies of this module.
-   *
-   * Use package@^version syntax.
-   */
-  readonly devDeps?: string[];
-
-  /**
    * Target for synth.
    */
   readonly outdir?: string;
@@ -57,7 +50,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
         'aws-cdk@2.25.0',
         'aws-cdk-lib@2.25.0',
         'constructs@10.1.17',
-      ], // TODO version + add cdk stuff
+      ],
 
       // Easier to manage these ourselves
       github: false,
