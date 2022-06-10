@@ -664,6 +664,7 @@ The command to execute.
 | <code><a href="#@guardian/cdk-app-ts.GuCDKTypescriptProject.property.eslint">eslint</a></code> | <code>projen.javascript.Eslint</code> | *No description.* |
 | <code><a href="#@guardian/cdk-app-ts.GuCDKTypescriptProject.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 | <code><a href="#@guardian/cdk-app-ts.GuCDKTypescriptProject.property.tsconfigEslint">tsconfigEslint</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
+| <code><a href="#@guardian/cdk-app-ts.GuCDKTypescriptProject.property.lintFix">lintFix</a></code> | <code>projen.Task</code> | *No description.* |
 
 ---
 
@@ -1362,6 +1363,16 @@ public readonly tsconfigEslint: TypescriptConfig;
 ```
 
 - *Type:* projen.javascript.TypescriptConfig
+
+---
+
+##### `lintFix`<sup>Required</sup> <a name="lintFix" id="@guardian/cdk-app-ts.GuCDKTypescriptProject.property.lintFix"></a>
+
+```typescript
+public readonly lintFix: Task;
+```
+
+- *Type:* projen.Task
 
 ---
 
