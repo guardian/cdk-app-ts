@@ -39,7 +39,7 @@ const project = new cdk.JsiiProject({
 // TODO really we should publish via a Github Action.
 project.addTask('publish', {
   exec: 'publib',
-  description: 'publish to npm (requires an NPM_TOKEN env var to be available)',
+  description: 'publish to npm (this requires an NPM_TOKEN env var to be available)',
 });
 
 project.addGitIgnore('tmp/'); // Used in integration test.
