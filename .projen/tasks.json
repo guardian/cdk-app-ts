@@ -191,6 +191,10 @@
       },
       "steps": [
         {
+          "exec": "rm -rf tmp",
+          "name": "clean-test-dir"
+        },
+        {
           "exec": "rm -fr dist"
         },
         {

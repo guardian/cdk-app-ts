@@ -44,6 +44,8 @@ project.addTask('publish', {
   description: 'publish to npm (this requires an NPM_TOKEN env var to be available)',
 });
 
-project.addGitIgnore('tmp/'); // Used in integration test.
+// Ensure we ignore 'tmp' (which the integration test outputs).
+project.tasks.tryFind('release').prependExec('rm -rf tmp', { name: 'clean-test-dir' });
+project.addGitIgnore('tmp/');
 
 project.synth();

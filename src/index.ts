@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { JsonFile, SampleDir, SampleFile } from 'projen';
+import { JsonFile, SampleDir, SampleFile, Task } from 'projen';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from 'projen/lib/typescript';
 
 export interface GuCDKTypescriptOptions {
@@ -21,6 +21,8 @@ export interface GuCDKTypescriptOptions {
  * @pjid gucdk-app-ts
  */
 export class GuCDKTypescriptProject extends TypeScriptAppProject {
+  lintFix: Task; // asigned to re-use in postsynth
+
   constructor(options: GuCDKTypescriptOptions) {
 
     const defaults: GuCDKTypescriptOptions = {
@@ -36,6 +38,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
 
       devDeps: [
         '@guardian/eslint-config-typescript@^1.0.1',
+        '@guardian/prettier@^1.0.0',
         '@types/jest@^27.5.0',
         '@types/node@17.0.35',
         'eslint@^8.16.0',
@@ -84,8 +87,8 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
 
     // Define our own tasks
     this.addTask('test', { exec: 'jest', description: 'Run tests' });
-    this.addTask('format', { exec: 'prettier --write "{lib,bin}/**/*.ts"', description: 'Format sources using prettier' });
-    this.addTask('lint', { exec: 'eslint lib/** bin/** --ext .ts --no-error-on-unmatched-pattern', description: 'Lint sources using eslint' });
+    this.addTask('lint', { exec: 'eslint --ext .ts --no-error-on-unmatched-pattern lib/**', description: 'Lint sources using eslint' });
+    this.lintFix = this.addTask('lint:fix', { exec: 'eslint --ext .ts --no-error-on-unmatched-pattern --fix lib/**', description: 'Lint sources using eslint' });
     this.addTask('synth', { exec: 'cdk synth --path-metadata false --version-reporting false', description: 'synth CDK stack(s)' });
     this.addTask('diff', { exec: 'cdk diff --path-metadata false --version-reporting false', description: 'diff CDK stack' });
 
@@ -127,7 +130,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
 
     new JsonFile(this, 'cdk.json', {
       obj: {
-        app: 'npx ts-node lib/cdk.ts',
+        app: 'npx ts-node lib/app.ts',
         context: {
           'aws-cdk:enableDiffNoFail': 'true',
           '@aws-cdk/core:stackRelativeExports': 'true',
@@ -141,9 +144,9 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
   }
 
   postSynthesize(): void {
-    const msg = `Congratulations! You're ready to start developing with @guardian/cdk :).
+    this.runTaskCommand(this.lintFix);
 
-This starter-kit uses projen (https://github.com/projen/projen).
+    const msg = `Reminder: this starter-kit uses projen (https://github.com/projen/projen).
 
 Unlike most starter-kits, projen is not a one-off generator, and synthesized
 files should NOT be manually edited. The only files you should edit are:
