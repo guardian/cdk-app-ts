@@ -1,3 +1,5 @@
+import * as child_process from 'child_process';
+import { readFileSync } from 'fs';
 import * as path from 'path';
 import { JsonFile, SampleDir, SampleFile, Task } from 'projen';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from 'projen/lib/typescript';
@@ -33,7 +35,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
       defaultReleaseBranch: 'main',
       readme: {
         filename: 'README.md',
-        contents: 'TODO',
+        contents: readme(),
       },
 
       devDeps: [
@@ -144,26 +146,12 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
   }
 
   postSynthesize(): void {
-    this.runTaskCommand(this.lintFix);
-
-    const msg = `Reminder: this starter-kit uses projen (https://github.com/projen/projen).
-
-Unlike most starter-kits, projen is not a one-off generator, and synthesized
-files should NOT be manually edited. The only files you should edit are:
-
-- 'lib/' - your Typescript CDK files and tests
-- '.projenrc.js' - to update settings, e.g. to add extra dev dependencies (run
-  'npx projen' to re-synth after any changes)
-
-To synthesise your new Cloudformation stack, run:
-
-    $ npx projen synth
-
-To list all possible tasks (such as 'test' and 'lint') and their descriptions run:
-
-    $ npx projen --help
-`;
-
-    console.log(msg);
+    const out = child_process.execSync(this.runTaskCommand(this.lintFix));
+    console.log(out.toString('utf-8'));
+    console.log(readme());
   }
 }
+
+const readme = (): string => {
+  return readFileSync(path.join(__dirname, '..', 'sample/README.md')).toString('utf-8');
+};
