@@ -462,7 +462,7 @@ tsconfig.tsbuildinfo
 
 exports[\`The IntegrationTest stack matches the snapshot 1\`] = \`Object {}\`;
 ",
-  "lib/cdk.ts": "import { App } from 'aws-cdk-lib';
+  "lib/app.ts": "import { App } from 'aws-cdk-lib';
 import { MyStack } from './stack';
 
 // Use this file to instantiate your stacks.

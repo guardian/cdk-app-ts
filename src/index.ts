@@ -136,7 +136,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
     });
 
     new SampleDir(this, 'lib', {
-      sourceDir: path.join(__dirname, 'sample/lib'),
+      sourceDir: path.join(__dirname, '..', 'sample/lib'),
     });
   }
 
