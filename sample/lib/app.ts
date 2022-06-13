@@ -6,11 +6,11 @@ import { MyStack } from './stack';
 const app = new App();
 
 new MyStack(app, 'MyStack-CODE', {
-  stack: 'cdk',
+  stack: 'FIXME',
   stage: 'CODE',
 });
 
 new MyStack(app, 'MyStack-PROD', {
-  stack: 'cdk',
+  stack: 'FIXME',
   stage: 'PROD',
 });

@@ -73,12 +73,21 @@
       ],
       "condition": "git diff --exit-code > /dev/null"
     },
+    "compat": {
+      "name": "compat",
+      "description": "Perform API compatibility check against latest version",
+      "steps": [
+        {
+          "exec": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
+        }
+      ]
+    },
     "compile": {
       "name": "compile",
       "description": "Only compile",
       "steps": [
         {
-          "exec": "tsc --build"
+          "exec": "jsii --silence-warnings=reserved-word"
         }
       ]
     },
@@ -88,6 +97,15 @@
       "steps": [
         {
           "exec": "node .projenrc.js"
+        }
+      ]
+    },
+    "docgen": {
+      "name": "docgen",
+      "description": "Generate API.md from .jsii manifest",
+      "steps": [
+        {
+          "exec": "jsii-docgen -o API.md"
         }
       ]
     },
@@ -117,16 +135,36 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "mkdir -p dist/js"
-        },
+          "exec": "if [ ! -z ${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi"
+        }
+      ]
+    },
+    "package-all": {
+      "name": "package-all",
+      "description": "Packages artifacts for all target languages",
+      "steps": [
         {
-          "exec": "mv $(npm pack) dist/js/"
+          "spawn": "package:js"
+        }
+      ]
+    },
+    "package:js": {
+      "name": "package:js",
+      "description": "Create js language bindings",
+      "steps": [
+        {
+          "exec": "jsii-pacmak -v --target js"
         }
       ]
     },
     "post-compile": {
       "name": "post-compile",
-      "description": "Runs after successful compilation"
+      "description": "Runs after successful compilation",
+      "steps": [
+        {
+          "spawn": "docgen"
+        }
+      ]
     },
     "post-upgrade": {
       "name": "post-upgrade",
@@ -136,6 +174,51 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
     },
+    "publish": {
+      "name": "publish",
+      "description": "publish to npm (this requires an NPM_TOKEN env var to be available)",
+      "steps": [
+        {
+          "exec": "publib"
+        }
+      ]
+    },
+    "publish:github": {
+      "name": "publish:github",
+      "description": "Publish this package to GitHub Releases",
+      "requiredEnv": [
+        "GITHUB_TOKEN",
+        "GITHUB_REPOSITORY",
+        "GITHUB_REF"
+      ],
+      "steps": [
+        {
+          "exec": "test \"$(git branch --show-current)\" = \"main\""
+        },
+        {
+          "exec": "echo \"DRY RUN: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \"Release.tag_name already exists\" $errout; then cat $errout; exit $exitcode; fi\""
+        }
+      ]
+    },
+    "publish:npm": {
+      "name": "publish:npm",
+      "description": "Publish this package to npm",
+      "env": {
+        "NPM_DIST_TAG": "latest",
+        "NPM_REGISTRY": "registry.npmjs.org"
+      },
+      "requiredEnv": [
+        "NPM_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "test \"$(git branch --show-current)\" = \"main\""
+        },
+        {
+          "exec": "echo \"DRY RUN: npx -p publib@latest publib-npm\""
+        }
+      ]
+    },
     "release": {
       "name": "release",
       "description": "Prepare a release from \"main\" branch",
@@ -143,6 +226,10 @@
         "RELEASE": "true"
       },
       "steps": [
+        {
+          "exec": "rm -rf tmp",
+          "name": "clean-test-dir"
+        },
         {
           "exec": "rm -fr dist"
         },
@@ -217,19 +304,19 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@guardian/cdk,aws-cdk-lib,aws-cdk,constructs'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@guardian/cdk,aws-cdk,aws-cdk-lib,constructs'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@guardian/cdk,aws-cdk-lib,aws-cdk,constructs'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@guardian/cdk,aws-cdk,aws-cdk-lib,constructs'"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@guardian/cdk,aws-cdk-lib,aws-cdk,constructs'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@guardian/cdk,aws-cdk,aws-cdk-lib,constructs'"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@guardian/cdk,aws-cdk-lib,aws-cdk,constructs'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@guardian/cdk,aws-cdk,aws-cdk-lib,constructs'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@guardian/cdk,aws-cdk-lib,aws-cdk,constructs'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@guardian/cdk,aws-cdk,aws-cdk-lib,constructs'"
         },
         {
           "exec": "yarn install --check-files"
@@ -250,7 +337,7 @@
       "description": "Watch & compile in the background",
       "steps": [
         {
-          "exec": "tsc --build -w"
+          "exec": "jsii -w --silence-warnings=reserved-word"
         }
       ]
     }

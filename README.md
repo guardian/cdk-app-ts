@@ -25,4 +25,6 @@ To list all possible tasks and their descriptions run:
 
     $ npx projen --help
 
+## Publishing new versions
+
 

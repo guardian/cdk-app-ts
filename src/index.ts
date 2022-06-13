@@ -1,5 +1,7 @@
-import path from 'path';
-import { JsonFile, SampleDir, SampleFile } from 'projen';
+import * as child_process from 'child_process';
+import { readFileSync } from 'fs';
+import * as path from 'path';
+import { JsonFile, SampleDir, SampleFile, Task } from 'projen';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from 'projen/lib/typescript';
 
 export interface GuCDKTypescriptOptions {
@@ -7,19 +9,12 @@ export interface GuCDKTypescriptOptions {
   /**
    * Package name
    */
-  name: string;
-
-  /**
-   * Dev dependencies of this module.
-   *
-   * Use package@^version syntax.
-   */
-  devDeps?: string[];
+  readonly name: string;
 
   /**
    * Target for synth.
    */
-  outdir?: string;
+  readonly outdir?: string;
 }
 
 /**
@@ -28,17 +23,24 @@ export interface GuCDKTypescriptOptions {
  * @pjid gucdk-app-ts
  */
 export class GuCDKTypescriptProject extends TypeScriptAppProject {
+  lintFix: Task; // asigned to re-use in postsynth
+
   constructor(options: GuCDKTypescriptOptions) {
+
+    const defaults: GuCDKTypescriptOptions = {
+      name: 'TODO',
+    };
 
     const tsOpts: TypeScriptProjectOptions = {
       defaultReleaseBranch: 'main',
       readme: {
         filename: 'README.md',
-        contents: 'TODO',
+        contents: readme(),
       },
 
       devDeps: [
         '@guardian/eslint-config-typescript@^1.0.1',
+        '@guardian/prettier@^1.0.0',
         '@types/jest@^27.5.0',
         '@types/node@17.0.35',
         'eslint@^8.16.0',
@@ -53,7 +55,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
         'aws-cdk@2.25.0',
         'aws-cdk-lib@2.25.0',
         'constructs@10.1.17',
-      ], // TODO version + add cdk stuff
+      ],
 
       // Easier to manage these ourselves
       github: false,
@@ -64,6 +66,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
 
       srcdir: 'lib', // this defaults to src unfortunately for us
 
+      ...defaults,
       ...options,
     };
 
@@ -86,8 +89,8 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
 
     // Define our own tasks
     this.addTask('test', { exec: 'jest', description: 'Run tests' });
-    this.addTask('format', { exec: 'prettier --write "{lib,bin}/**/*.ts"', description: 'Format sources using prettier' });
-    this.addTask('lint', { exec: 'eslint lib/** bin/** --ext .ts --no-error-on-unmatched-pattern', description: 'Lint sources using eslint' });
+    this.addTask('lint', { exec: 'eslint --ext .ts --no-error-on-unmatched-pattern lib/**', description: 'Lint sources using eslint' });
+    this.lintFix = this.addTask('lint:fix', { exec: 'eslint --ext .ts --no-error-on-unmatched-pattern --fix lib/**', description: 'Lint sources using eslint' });
     this.addTask('synth', { exec: 'cdk synth --path-metadata false --version-reporting false', description: 'synth CDK stack(s)' });
     this.addTask('diff', { exec: 'cdk diff --path-metadata false --version-reporting false', description: 'diff CDK stack' });
 
@@ -129,7 +132,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
 
     new JsonFile(this, 'cdk.json', {
       obj: {
-        app: 'npx ts-node lib/cdk.ts',
+        app: 'npx ts-node lib/app.ts',
         context: {
           'aws-cdk:enableDiffNoFail': 'true',
           '@aws-cdk/core:stackRelativeExports': 'true',
@@ -138,31 +141,17 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
     });
 
     new SampleDir(this, 'lib', {
-      sourceDir: path.join(__dirname, 'sample/lib'),
+      sourceDir: path.join(__dirname, '..', 'sample/lib'),
     });
   }
 
   postSynthesize(): void {
-    const msg = `Congratulations! You're ready to start developing with @guardian/cdk :).
-
-This starter-kit uses projen (https://github.com/projen/projen).
-
-Unlike most starter-kits, projen is not a one-off generator, and synthesized
-files should NOT be manually edited. The only files you should edit are:
-
-- 'lib/' - your Typescript CDK files and tests
-- '.projenrc.js' - to update settings, e.g. to add extra dev dependencies (run
-  'npx projen' to re-synth after any changes)
-
-To synthesise your new Cloudformation stack, run:
-
-    $ npx projen synth
-
-To list all possible tasks (such as 'test' and 'lint') and their descriptions run:
-
-    $ npx projen --help
-`;
-
-    console.log(msg);
+    const out = child_process.execSync(this.runTaskCommand(this.lintFix));
+    console.log(out.toString('utf-8'));
+    console.log('Synth complete! See README.md for usage.');
   }
 }
+
+const readme = (): string => {
+  return readFileSync(path.join(__dirname, '..', 'sample/README.md')).toString('utf-8');
+};
