@@ -10,8 +10,6 @@ const project = new cdk.JsiiProject({
   npmDistTag: 'latest',
 
   releaseToNpm: true,
-  publishTasks: true,
-  publishDryRun: true,
 
   deps: [
     'aws-cdk-lib@2.25.0',
