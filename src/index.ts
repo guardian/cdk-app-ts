@@ -148,7 +148,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
   postSynthesize(): void {
     const out = child_process.execSync(this.runTaskCommand(this.lintFix));
     console.log(out.toString('utf-8'));
-    console.log(readme());
+    console.log('Synth complete! See README.md for usage.');
   }
 }
 

@@ -13,8 +13,6 @@ const project = new cdk.JsiiProject({
   publishTasks: true,
   publishDryRun: true,
 
-  github: false,
-
   deps: [
     'aws-cdk-lib@2.25.0',
     'constructs@10.1.17',
