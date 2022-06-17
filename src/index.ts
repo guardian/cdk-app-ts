@@ -55,6 +55,8 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
         'aws-cdk@2.25.0',
         'aws-cdk-lib@2.25.0',
         'constructs@10.1.17',
+
+        '@guardian/cdk-app-ts', // required for subsequent synths ('npx projen') to work!
       ],
 
       // Easier to manage these ourselves
