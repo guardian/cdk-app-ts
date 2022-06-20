@@ -195,6 +195,15 @@ tsconfig.tsbuildinfo
           },
         ],
       },
+      "dependencies": Object {
+        "description": "Install dependencies based on lockfile",
+        "name": "dependencies",
+        "steps": Array [
+          Object {
+            "exec": "yarn install --check-files --frozen-lockfile",
+          },
+        ],
+      },
       "diff": Object {
         "description": "diff CDK stack",
         "name": "diff",
@@ -607,6 +616,7 @@ export class MyStack extends GuStack {
     "prettier": "@guardian/prettier",
     "scripts": Object {
       "default": "npx projen default",
+      "dependencies": "npx projen dependencies",
       "diff": "npx projen diff",
       "eject": "npx projen eject",
       "lint": "npx projen lint",

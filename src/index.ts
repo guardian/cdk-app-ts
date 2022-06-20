@@ -90,6 +90,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
     this.removeTask('watch');
 
     // Define our own tasks
+    this.addTask('dependencies', { exec: this.package.installCommand, description: 'Install dependencies based on lockfile' });
     this.addTask('test', { exec: 'jest', description: 'Run tests' });
     this.addTask('lint', { exec: 'eslint --ext .ts --no-error-on-unmatched-pattern lib/**', description: 'Lint sources using eslint' });
     this.lintFix = this.addTask('lint:fix', { exec: 'eslint --ext .ts --no-error-on-unmatched-pattern --fix lib/**', description: 'Lint sources using eslint' });
