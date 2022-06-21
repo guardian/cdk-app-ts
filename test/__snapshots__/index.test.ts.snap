@@ -196,7 +196,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "dependencies": Object {
-        "description": "Install dependencies based on lockfile",
+        "description": "Install dependencies based on lockfile e.g. during CI",
         "name": "dependencies",
         "steps": Array [
           Object {
@@ -472,9 +472,10 @@ tsconfig.tsbuildinfo
 
 Some example commands are:
 
-    $ npx projen synth    // synthesise your CDK project
-    $ npx projen --help   // see all available commands (test, lint, etc.)
-    $ npx projen          // update the scaffold itself
+    $ npx projen synth           // synthesise your CDK project
+    $ npx projen dependencies    // install dependencies based on lockfile e.g. during CI
+    $ npx projen --help          // see all available commands (test, lint, etc.)
+    $ npx projen                 // update the scaffold itself
 
 Reminder: this starter-kit uses projen (https://github.com/projen/projen).
 
