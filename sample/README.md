@@ -4,9 +4,10 @@
 
 Some example commands are:
 
-    $ npx projen synth    // synthesise your CDK project
-    $ npx projen --help   // see all available commands (test, lint, etc.)
-    $ npx projen          // update the scaffold itself
+    $ npx projen synth           // synthesise your CDK project
+    $ npx projen dependencies    // install dependencies based on lockfile e.g. during CI
+    $ npx projen --help          // see all available commands (test, lint, etc.)
+    $ npx projen                 // update the scaffold itself
 
 Reminder: this starter-kit uses projen (https://github.com/projen/projen).
 
