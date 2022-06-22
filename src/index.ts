@@ -51,7 +51,7 @@ export class GuCDKTypescriptProject extends TypeScriptAppProject {
         'typescript@~4.7.2',
         'eslint-config-prettier@^8.5.0',
 
-        '@guardian/cdk@^45.0.0',
+        '@guardian/cdk@^45.1.1',
         'aws-cdk@2.25.0',
         'aws-cdk-lib@2.25.0',
         'constructs@10.1.17',

@@ -27,7 +27,7 @@ const project = new cdk.JsiiProject({
 
   bundledDeps: [
     'aws-cdk@2.25.0',
-    '@guardian/cdk@45.0.0',
+    '@guardian/cdk@45.1.1',
     '@guardian/prettier@^1.0.0',
   ],
 });
