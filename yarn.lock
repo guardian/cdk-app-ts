@@ -309,14 +309,14 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@guardian/cdk@45.0.0":
-  version "45.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/cdk/-/cdk-45.0.0.tgz#50275e43aa6c85d9a706bcb969d3333a7cf7e5cd"
-  integrity sha512-kbadZUuDnfGpCRk3QCkZCBC/Jn2zoNEXoOWjE2vpJoBWWvknqEBSTE/j8ssN1ydE9HAe8F4Zu/O7DLdIoh1pXg==
+"@guardian/cdk@45.1.1":
+  version "45.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/cdk/-/cdk-45.1.1.tgz#89ae100a3ccae800eea5da2c4800b1ad322cada2"
+  integrity sha512-KldcBjE6A+wJtN9CmcRuyKMwRyHulsAPIqtIBx1PWcokCTI0kKuXv/S7IAtxR3FADze+iOmzZZjJrJkMDDtVOg==
   dependencies:
-    "@oclif/core" "1.8.1"
+    "@oclif/core" "1.9.0"
     aws-cdk-lib "2.25.0"
-    aws-sdk "^2.1138.0"
+    aws-sdk "^2.1154.0"
     chalk "^4.1.2"
     codemaker "^1.59.0"
     constructs "10.1.17"
@@ -695,10 +695,10 @@
     node-gyp "^8.4.1"
     read-package-json-fast "^2.0.3"
 
-"@oclif/core@1.8.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-1.8.1.tgz#1783b83b69c2505c070aabff475964cb75fee27b"
-  integrity sha512-6pNQnkL2Uk9SbRUb12BFminLPhrPab1euNzVl1eh+Q7+X8+JGMw8vgKUfQRlGZesmcd+8fByQMZBaoOAEozJsw==
+"@oclif/core@1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-1.9.0.tgz#bb2a7820a9176f28921f449c0f577d39c15e74d0"
+  integrity sha512-duvlaRQf4JM+mKuwwos1DNa/Q9x6tnF3khV5RU0fy5hhETF7THlTmxioKlIvKMyQDVpySqtZXZ0OKHeCi2EWuQ==
   dependencies:
     "@oclif/linewrap" "^1.0.0"
     "@oclif/screen" "^3.0.2"
@@ -717,7 +717,6 @@
     indent-string "^4.0.0"
     is-wsl "^2.2.0"
     js-yaml "^3.14.1"
-    lodash "^4.17.21"
     natural-orderby "^2.0.3"
     object-treeify "^1.1.33"
     password-prompt "^1.1.2"
@@ -1283,10 +1282,10 @@ aws-cdk@2.25.0:
   optionalDependencies:
     fsevents "2.3.2"
 
-aws-sdk@^2.1138.0:
-  version "2.1150.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1150.0.tgz#6f43380837d9cd1b761b9dc51395067686a4a053"
-  integrity sha512-SNbVXNlFGNFVcztPk7iWnjtGL+Afm1nyidpvX2rEqYdap2Ow57njZJXvghQUici4Xhqe+BUuG+x1orlFjapo4g==
+aws-sdk@^2.1154.0:
+  version "2.1159.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1159.0.tgz#64d585ac608d58e6ff62678be71a4c4ca61ca5dc"
+  integrity sha512-zm3k/ufwZnkWc6M+HDz00CWuILot4L9kJ5VJsuDS9fwsT9To6k91Y1njCtIV4tcgcXvUru0Sbm4D0w5bc2847A==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
